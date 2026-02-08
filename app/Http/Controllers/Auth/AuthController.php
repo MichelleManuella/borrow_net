@@ -53,7 +53,7 @@ class AuthController extends Controller
 
         $user = Auth::user();
 
-        return redirect()->route('dashboard')->with('success', 'Login berhasil');
+        return redirect()->route('admin.dashboard')->with('success', 'Login berhasil');
     }
 
     /* =======================
@@ -78,7 +78,7 @@ class AuthController extends Controller
             'akun_role'      => 'peminjam',
         ]);
 
-        return redirect()->route('dashboard')->with('success', 'Registrasi berhasil, silakan login');
+        return redirect()->route('admin.dashboard')->with('success', 'Registrasi berhasil, silakan login');
     }
 
     /* =======================
