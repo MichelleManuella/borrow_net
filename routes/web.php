@@ -38,4 +38,14 @@ Route::middleware('auth')->prefix('admin')->group(function () {
 
     Route::post('/kategori-alat', [KategoriController::class, 'store'])
         ->name('kategori.store');
+
+        Route::delete('/kategori-alat/{id}', [KategoriController::class, 'destroy'])
+    ->name('kategori.destroy');
+
+    Route::get('/kategori-alat/{id}/edit', [KategoriController::class, 'edit'])
+    ->name('kategori.edit');
+
+    Route::put('/kategori-alat/{id}', [KategoriController::class, 'update'])
+    ->name('kategori.update');
+
 });

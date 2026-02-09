@@ -76,9 +76,25 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $kategori->nama_kategori }}</td>
                                 <td>
-                                    <button class="btn btn-sm btn-warning">Edit</button>
-                                    <button class="btn btn-sm btn-danger">Hapus</button>
-                                </td>
+                                    
+            <a href="{{ route('kategori.edit', $kategori->id) }}"
+               class="btn btn-sm btn-warning">
+                      Edit
+            </a>
+                
+            <!-- FORM HAPUS -->
+            <form action="{{ route('kategori.destroy', $kategori->id) }}"
+                  method="POST"
+                  class="d-inline"
+                  onsubmit="return confirm('Yakin hapus kategori ini?')">
+                 @csrf
+                 @method('DELETE')
+
+                <button type="submit" class="btn btn-sm btn-danger">
+                   Hapus
+                </button>
+            </form>
+                            </td>
                             </tr>
                             @empty
                             <tr>
