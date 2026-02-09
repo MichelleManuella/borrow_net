@@ -68,13 +68,21 @@
            <i class="bi bi-speedometer2"></i> Dashboard
         </a>
 
-        <a href="#"><i class="bi bi-people"></i> User</a>
-        <a href="#"><i class="bi bi-laptop"></i> Alat</a>
+        <a href="{{ route('user.index') }}"
+   class="{{ request()->routeIs('user.*') ? 'active' : '' }}">
+   <i class="bi bi-people"></i> User
+</a>
 
-        <a href="{{ route('admin.kategori') }}"
-           class="{{ request()->routeIs('admin.kategori') ? 'active' : '' }}">
-           <i class="bi bi-tags"></i> Kategori
+        <a href="{{ route('alat.index') }}"
+           class="{{ request()->routeIs('alat.*') ? 'active' : '' }}">
+        <i class="bi bi-laptop"></i> Alat
         </a>
+
+       <a href="{{ route('kategori.index') }}"
+   class="{{ request()->routeIs('kategori.*') ? 'active' : '' }}">
+   <i class="bi bi-tags"></i> Kategori
+</a>
+
 
         <a href="#"><i class="bi bi-arrow-left-right"></i> Data Peminjaman</a>
         <a href="#"><i class="bi bi-arrow-repeat"></i> Data Pengembalian</a>

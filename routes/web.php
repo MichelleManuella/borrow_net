@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Admin\KategoriController;
+use App\Http\Controllers\Admin\AlatController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\PeminjamanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,8 +28,7 @@ Route::controller(AuthController::class)->group(function () {
 | ADMIN
 |--------------------------------------------------------------------------
 */
-Route::middleware('auth')->prefix('admin')->group(function () {
-
+Route::middleware(['auth'])->prefix('admin')->group(function () {
     // dashboard
     Route::get('/dashboard', function () {
         return view('admin.dashboard');
@@ -39,13 +41,38 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::post('/kategori-alat', [KategoriController::class, 'store'])
         ->name('kategori.store');
 
-        Route::delete('/kategori-alat/{id}', [KategoriController::class, 'destroy'])
-    ->name('kategori.destroy');
-
     Route::get('/kategori-alat/{id}/edit', [KategoriController::class, 'edit'])
-    ->name('kategori.edit');
+        ->name('kategori.edit');
 
     Route::put('/kategori-alat/{id}', [KategoriController::class, 'update'])
-    ->name('kategori.update');
+        ->name('kategori.update');
+
+    Route::delete('/kategori-alat/{id}', [KategoriController::class, 'destroy'])
+        ->name('kategori.destroy');
+
+    // ✅ ALAT (CRUD)
+    Route::resource('alat', AlatController::class);
+
+    Route::get('/user', [UserController::class, 'index'])
+    ->name('user.index');
+
+    Route::get('/user/create', [UserController::class, 'create'])
+    ->name('user.create');
+
+Route::post('/user', [UserController::class, 'store'])
+    ->name('user.store');
+
+    Route::delete('/user/{id}', [UserController::class, 'destroy'])
+    ->name('user.destroy');
+
+    Route::get('/user/{id}/edit', [UserController::class, 'edit'])
+    ->name('user.edit');
+
+    Route::put('/user/{id}', [UserController::class, 'update'])
+    ->name('user.update');
+
+    Route::get('/peminjaman', [PeminjamanController::class, 'index'])
+    ->name('admin.peminjaman.index');
 
 });
+
