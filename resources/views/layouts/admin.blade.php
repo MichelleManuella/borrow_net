@@ -84,7 +84,11 @@
 </a>
 
 
-        <a href="#"><i class="bi bi-arrow-left-right"></i> Data Peminjaman</a>
+    <a href="{{ route('admin.peminjaman.index') }}"
+       class="{{ request()->routeIs('admin.peminjaman.*') ? 'active' : '' }}">
+   <i class="bi bi-arrow-left-right"></i> Data Peminjaman
+</a>
+
         <a href="#"><i class="bi bi-arrow-repeat"></i> Data Pengembalian</a>
         <a href="#"><i class="bi bi-clock-history"></i> Log Aktivitas</a>
     </div>

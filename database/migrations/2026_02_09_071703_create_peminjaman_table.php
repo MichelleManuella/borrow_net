@@ -15,7 +15,7 @@ public function up()
         $table->foreignId('alat_id')->constrained()->onDelete('cascade');
         $table->date('tanggal_pinjam');
         $table->date('tanggal_kembali')->nullable();
-        $table->enum('status', ['dipinjam', 'dikembalikan', 'terlambat'])->default('dipinjam');
+        $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
         $table->timestamps();
     });
 }

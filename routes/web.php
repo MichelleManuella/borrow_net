@@ -74,5 +74,41 @@ Route::post('/user', [UserController::class, 'store'])
     Route::get('/peminjaman', [PeminjamanController::class, 'index'])
     ->name('admin.peminjaman.index');
 
+    // Update status peminjaman
+    Route::put('/peminjaman/{id}/status', [PeminjamanController::class, 'updateStatus'])
+    ->name('admin.peminjaman.status');
+
+    // Hapus peminjaman
+    Route::delete('/peminjaman/{id}', [PeminjamanController::class, 'destroy'])
+    ->name('admin.peminjaman.destroy');
+
+    // Form tambah peminjaman
+    Route::get('/peminjaman/create', [PeminjamanController::class, 'create'])
+    ->name('admin.peminjaman.create');
+
+    // Simpan data peminjaman baru
+    Route::post('/peminjaman', [PeminjamanController::class, 'store'])
+    ->name('admin.peminjaman.store');
+
+    // Form edit peminjaman
+    Route::get('/peminjaman/{id}/edit', [PeminjamanController::class, 'edit'])
+    ->name('admin.peminjaman.edit');
+
+    // Update data peminjaman
+    Route::put('/peminjaman/{id}', [PeminjamanController::class, 'update'])
+    ->name('admin.peminjaman.update');
+
+    // Update status peminjaman (approve/reject)
+    Route::put('/peminjaman/{id}/status', [PeminjamanController::class, 'updateStatus'])
+    ->name('admin.peminjaman.status');
+
+    // Form edit peminjaman
+    Route::get('/peminjaman/{id}/edit', [PeminjamanController::class, 'edit'])
+    ->name('admin.peminjaman.edit');
+
+    // Update data peminjaman
+    Route::put('/peminjaman/{id}', [PeminjamanController::class, 'update'])
+    ->name('admin.peminjaman.update');
+
 });
 
