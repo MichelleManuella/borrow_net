@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="card-stat" style="max-width:600px">
-    <form method="POST" action="{{ route('user.store') }}">
+    <form method="POST" action="{{ route('admin.user.store') }}">
         @csrf
 
         <div class="mb-3">
@@ -49,7 +49,7 @@
         </div>
 
         <button class="btn btn-primary">Simpan</button>
-        <a href="{{ route('user.index') }}" class="btn btn-secondary">Batal</a>
+        <a href="{{ route('admin.user.index') }}" class="btn btn-secondary">Batal</a>
     </form>
 </div>
 

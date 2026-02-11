@@ -5,137 +5,96 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title')</title>
 
-    <!-- Bootstrap CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+    @stack('styles')
 
     <style>
         :root {
-            --auth-primary: #90AB8B;
-            --auth-secondary: #EBF4DD;
-            --auth-accent: #5A7863;
+            --dark: #060608;
+            --primary: #2370A1;
+            --purple: #a495c6;
+            --peach: #fad3ce;
         }
-
-        * {
-            font-family: 'Poppins', sans-serif;
-        }
-
+        
+        /* Background */
         body {
             min-height: 100vh;
-            margin: 0;
-            background-color: var(--auth-secondary);
-            color: #243024;
-        }
-
-        .auth-wrapper {
-            min-height: 100vh;
+            background: linear-gradient(135deg, var(--primary), var(--purple));
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 4rem 1rem;
+            font-family: 'Segoe UI', sans-serif;
         }
-
+        
+        /* Card */
         .auth-card {
             border: none;
-            border-radius: 1.5rem;
-            background: rgba(255, 255, 255, 0.95);
-            box-shadow: 0 18px 45px rgba(90, 120, 99, 0.25);
-            backdrop-filter: blur(8px);
+            border-radius: 22px;
+            padding: 35px;
+            background: #ffffff;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
         }
-
-        .auth-card .card-body {
-            padding: 2.5rem;
-        }
-
+        
+        /* Title */
         .auth-title {
-            font-weight: 600;
-            color: var(--auth-accent);
-            letter-spacing: 0.03em;
+            font-weight: 700;
+            font-size: 26px;
+            color: var(--dark);
+            margin-bottom: 25px;
         }
-
-        .auth-description {
-            font-size: 0.9rem;
-            color: rgba(36, 48, 36, 0.7);
-        }
-
-        .form-label {
-            font-weight: 500;
-            color: var(--auth-accent);
-        }
-
+        
+        /* Input */
         .form-control {
-            border-radius: 0.85rem;
-            border: 1px solid rgba(90, 120, 99, 0.25);
-            padding: 0.65rem 1rem;
-            transition: all 0.2s ease;
+            border-radius: 14px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            transition: 0.3s ease;
         }
-
+        
         .form-control:focus {
-            border-color: var(--auth-primary);
-            box-shadow: 0 0 0 0.2rem rgba(144, 171, 139, 0.2);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(35,112,161,0.2);
         }
-
+        
+        /* Button */
         .btn-auth-primary {
-            background: var(--auth-primary);
-            border-color: var(--auth-primary);
-            border-radius: 0.85rem;
+            border-radius: 14px;
+            padding: 12px;
             font-weight: 600;
-            letter-spacing: 0.02em;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            background: linear-gradient(135deg, var(--primary), var(--purple));
+            border: none;
+            transition: 0.3s ease;
         }
-
-        .btn-auth-primary:hover,
-        .btn-auth-primary:focus {
-            background: var(--auth-accent);
-            border-color: var(--auth-accent);
-            transform: translateY(-1px);
-            box-shadow: 0 12px 24px rgba(90, 120, 99, 0.25);
+        
+        .btn-auth-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
         }
-
+        
+        /* Link */
         .auth-link {
-            color: var(--auth-accent);
-            font-weight: 500;
+            color: var(--primary);
             text-decoration: none;
-            transition: color 0.2s ease;
+            font-weight: 500;
         }
-
+        
         .auth-link:hover {
-            color: var(--auth-primary);
             text-decoration: underline;
         }
-
-        @media (max-width: 576px) {
-            .auth-card .card-body {
-                padding: 2rem 1.5rem;
-            }
-
-            body::before {
-                width: 260px;
-                height: 260px;
-                top: -140px;
-                left: -120px;
-            }
-
-            body::after {
-                width: 240px;
-                height: 240px;
-                bottom: -120px;
-                right: -100px;
-            }
-        }
-    </style>
+        </style>
+        
 </head>
 <body>
-
     <div class="auth-wrapper">
-        <div class="container">
+        <div class="auth-page-wrapper">
             @yield('content')
         </div>
     </div>
 
-    <!-- Bootstrap JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+    @stack('scripts')
 </body>
 </html>

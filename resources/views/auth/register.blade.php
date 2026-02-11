@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="row justify-content-center">
-    <div class="col-md-7 col-lg-5">
+    <div class="">
         <div class="card auth-card shadow-lg">
             <div class="card-body">
                 <h4 class="text-center mb-2 auth-title">Buat Akun Baru</h4>

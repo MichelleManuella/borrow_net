@@ -30,7 +30,7 @@
     <div class="card p-4">
         <h5 class="mb-3">✏️ Edit Kategori</h5>
 
-        <form method="POST" action="{{ route('kategori.update', $kategori->id) }}">
+        <form method="POST" action="{{ route('admin.kategori.update', $kategori->id) }}">
             @csrf
             @method('PUT')
 
@@ -48,7 +48,7 @@
                     Update
                 </button>
 
-                <a href="{{ route('kategori.index') }}" class="btn btn-secondary w-100">
+                <a href="{{ route('admin.kategori.index') }}" class="btn btn-secondary w-100">
                     Batal
                 </a>
             </div>

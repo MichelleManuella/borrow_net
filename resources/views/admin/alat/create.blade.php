@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="card-stat" style="max-width:600px">
-    <form action="{{ route('alat.store') }}" method="POST">
+    <form action="{{ route('admin.alat.store') }}" method="POST">
         @csrf
 
         <!-- Nama Alat -->
@@ -44,7 +44,7 @@
             <button type="submit" class="btn btn-primary">
                 Simpan
             </button>
-            <a href="{{ route('alat.index') }}" class="btn btn-secondary">
+            <a href="{{ route('admin.alat.index') }}" class="btn btn-secondary">
                 Batal
             </a>
         </div>

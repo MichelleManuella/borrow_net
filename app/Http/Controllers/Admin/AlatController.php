@@ -35,7 +35,7 @@ public function store(Request $request)
         'kondisi'     => $request->kondisi,
     ]);
 
-    return redirect()->route('alat.index')
+    return redirect()->route('admin.alat.index')
         ->with('success', 'Alat berhasil ditambahkan');
 }
 public function destroy($id)
@@ -43,7 +43,7 @@ public function destroy($id)
     $alat = Alat::findOrFail($id);
     $alat->delete();
 
-    return redirect()->route('alat.index')
+    return redirect()->route('admin.alat.index')
         ->with('success', 'Alat berhasil dihapus');
 }
 public function edit($id)
@@ -63,7 +63,7 @@ public function edit($id)
     $alat = Alat::findOrFail($id);
     $alat->update($request->all());
 
-    return redirect()->route('alat.index')
+    return redirect()->route('admin.alat.index')
         ->with('success', 'Alat berhasil diperbarui');
 }
 }

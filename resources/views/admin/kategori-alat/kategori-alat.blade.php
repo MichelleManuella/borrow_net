@@ -32,7 +32,7 @@
             <div class="card p-4">
                 <h6 class="mb-3">Tambah Kategori</h6>
 
-                <form method="POST" action="{{ route('kategori.store') }}">
+                <form method="POST" action="{{ route('admin.kategori.store') }}">
                     @csrf
                     <div class="mb-3">
                         <label class="form-label">Nama Kategori</label>
@@ -69,12 +69,12 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $kategori->nama_kategori }}</td>
                             <td>
-                                <a href="{{ route('kategori.edit', $kategori->id) }}"
+                                <a href="{{ route('admin.kategori.edit', $kategori->id) }}"
                                    class="btn btn-sm btn-warning">
                                    Edit
                                 </a>
 
-                                <form action="{{ route('kategori.destroy', $kategori->id) }}"
+                                <form action="{{ route('admin.kategori.destroy', $kategori->id) }}"
                                       method="POST"
                                       class="d-inline"
                                       onsubmit="return confirm('Yakin hapus kategori ini?')">

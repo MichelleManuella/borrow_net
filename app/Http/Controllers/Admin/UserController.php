@@ -41,7 +41,7 @@ class UserController extends Controller
         'role'       => $request->role,
     ]);
 
-    return redirect()->route('user.index')
+    return redirect()->route('admin.user.index')
         ->with('success', 'User berhasil ditambahkan');
 }
 
@@ -89,7 +89,7 @@ public function update(Request $request, $id)
 
     $user->update($data);
 
-    return redirect()->route('user.index')
+    return redirect()->route('admin.user.index')
         ->with('success', 'User berhasil diupdate');
 }
 

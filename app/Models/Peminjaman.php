@@ -30,4 +30,9 @@ class Peminjaman extends Model
     {
         return $this->belongsTo(Alat::class);
     }
+    public function pengembalian()
+{
+    return $this->hasOne(Pengembalian::class);
+}
+
 }

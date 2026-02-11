@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\KategoriController;
 use App\Http\Controllers\Admin\AlatController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PeminjamanController;
+use App\Http\Controllers\Admin\PengembalianController;
+use App\Http\Controllers\Admin\LogAktivitasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,87 +30,64 @@ Route::controller(AuthController::class)->group(function () {
 | ADMIN
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth'])->prefix('admin')->group(function () {
-    // dashboard
+Route::middleware(['auth'])->name('admin.')->prefix('admin')->group(function () {
+
+    // ================= DASHBOARD =================
     Route::get('/dashboard', function () {
         return view('admin.dashboard');
-    })->name('admin.dashboard');
+    })->name('dashboard');
 
-    // kategori alat
-    Route::get('/kategori-alat', [KategoriController::class, 'index'])
-        ->name('kategori.index');
+    // ================= KATEGORI =================
+    Route::get('/kategori-alat', [KategoriController::class, 'index'])->name('kategori.index');
+    Route::post('/kategori-alat', [KategoriController::class, 'store'])->name('kategori.store');
+    Route::get('/kategori-alat/{id}/edit', [KategoriController::class, 'edit'])->name('kategori.edit');
+    Route::put('/kategori-alat/{id}', [KategoriController::class, 'update'])->name('kategori.update');
+    Route::delete('/kategori-alat/{id}', [KategoriController::class, 'destroy'])->name('kategori.destroy');
 
-    Route::post('/kategori-alat', [KategoriController::class, 'store'])
-        ->name('kategori.store');
-
-    Route::get('/kategori-alat/{id}/edit', [KategoriController::class, 'edit'])
-        ->name('kategori.edit');
-
-    Route::put('/kategori-alat/{id}', [KategoriController::class, 'update'])
-        ->name('kategori.update');
-
-    Route::delete('/kategori-alat/{id}', [KategoriController::class, 'destroy'])
-        ->name('kategori.destroy');
-
-    // ✅ ALAT (CRUD)
+    // ================= ALAT =================
     Route::resource('alat', AlatController::class);
 
-    Route::get('/user', [UserController::class, 'index'])
-    ->name('user.index');
+    // ================= USER =================
+    Route::get('/user', [UserController::class, 'index'])->name('user.index');
+    Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
+    Route::post('/user', [UserController::class, 'store'])->name('user.store');
+    Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
+    Route::put('/user/{id}', [UserController::class, 'update'])->name('user.update');
+    Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('user.destroy');
 
-    Route::get('/user/create', [UserController::class, 'create'])
-    ->name('user.create');
+    // ================= PEMINJAMAN =================
+    Route::get('/peminjaman', [PeminjamanController::class, 'index'])->name('peminjaman.index');
+    Route::get('/peminjaman/create', [PeminjamanController::class, 'create'])->name('peminjaman.create');
+    Route::post('/peminjaman', [PeminjamanController::class, 'store'])->name('peminjaman.store');
+    Route::get('/peminjaman/{id}/edit', [PeminjamanController::class, 'edit'])->name('peminjaman.edit');
+    Route::put('/peminjaman/{id}', [PeminjamanController::class, 'update'])->name('peminjaman.update');
+    Route::put('/peminjaman/{id}/status', [PeminjamanController::class, 'updateStatus'])->name('peminjaman.status');
+    Route::delete('/peminjaman/{id}', [PeminjamanController::class, 'destroy'])->name('peminjaman.destroy');
 
-Route::post('/user', [UserController::class, 'store'])
-    ->name('user.store');
+    // ================= PENGEMBALIAN ================
 
-    Route::delete('/user/{id}', [UserController::class, 'destroy'])
-    ->name('user.destroy');
+        // halaman pengembalian
+        Route::get('/pengembalian', [PengembalianController::class, 'index'])
+        ->name('pengembalian.index');
 
-    Route::get('/user/{id}/edit', [UserController::class, 'edit'])
-    ->name('user.edit');
+    Route::get('/pengembalian/create', [PengembalianController::class, 'create'])
+        ->name('pengembalian.create');
 
-    Route::put('/user/{id}', [UserController::class, 'update'])
-    ->name('user.update');
+    Route::post('/pengembalian', [PengembalianController::class, 'store'])
+        ->name('pengembalian.store');
 
-    Route::get('/peminjaman', [PeminjamanController::class, 'index'])
-    ->name('admin.peminjaman.index');
+    Route::get('/pengembalian/{id}/edit', [PengembalianController::class, 'edit'])
+        ->name('pengembalian.edit');
 
-    // Update status peminjaman
-    Route::put('/peminjaman/{id}/status', [PeminjamanController::class, 'updateStatus'])
-    ->name('admin.peminjaman.status');
+    Route::put('/pengembalian/{id}', [PengembalianController::class, 'update'])
+        ->name('pengembalian.update');
 
-    // Hapus peminjaman
-    Route::delete('/peminjaman/{id}', [PeminjamanController::class, 'destroy'])
-    ->name('admin.peminjaman.destroy');
-
-    // Form tambah peminjaman
-    Route::get('/peminjaman/create', [PeminjamanController::class, 'create'])
-    ->name('admin.peminjaman.create');
-
-    // Simpan data peminjaman baru
-    Route::post('/peminjaman', [PeminjamanController::class, 'store'])
-    ->name('admin.peminjaman.store');
-
-    // Form edit peminjaman
-    Route::get('/peminjaman/{id}/edit', [PeminjamanController::class, 'edit'])
-    ->name('admin.peminjaman.edit');
-
-    // Update data peminjaman
-    Route::put('/peminjaman/{id}', [PeminjamanController::class, 'update'])
-    ->name('admin.peminjaman.update');
-
-    // Update status peminjaman (approve/reject)
-    Route::put('/peminjaman/{id}/status', [PeminjamanController::class, 'updateStatus'])
-    ->name('admin.peminjaman.status');
-
-    // Form edit peminjaman
-    Route::get('/peminjaman/{id}/edit', [PeminjamanController::class, 'edit'])
-    ->name('admin.peminjaman.edit');
-
-    // Update data peminjaman
-    Route::put('/peminjaman/{id}', [PeminjamanController::class, 'update'])
-    ->name('admin.peminjaman.update');
+    Route::delete('/pengembalian/{id}', [PengembalianController::class, 'destroy'])
+        ->name('pengembalian.destroy');
 
 });
 
+    Route::prefix('admin')->group(function () {
+        Route::get('log-aktivitas', [LogAktivitasController::class, 'index'])
+            ->name('admin.log.log');
+    });    

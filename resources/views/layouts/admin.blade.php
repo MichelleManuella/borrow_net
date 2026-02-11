@@ -68,29 +68,37 @@
            <i class="bi bi-speedometer2"></i> Dashboard
         </a>
 
-        <a href="{{ route('user.index') }}"
-   class="{{ request()->routeIs('user.*') ? 'active' : '' }}">
+        <a href="{{ route('admin.user.index') }}"
+   class="{{ request()->routeIs('admin.user.*') ? 'active' : '' }}">
    <i class="bi bi-people"></i> User
 </a>
 
-        <a href="{{ route('alat.index') }}"
-           class="{{ request()->routeIs('alat.*') ? 'active' : '' }}">
+        <a href="{{ route('admin.alat.index') }}"
+           class="{{ request()->routeIs('admin.alat.*') ? 'active' : '' }}">
         <i class="bi bi-laptop"></i> Alat
         </a>
 
-       <a href="{{ route('kategori.index') }}"
-   class="{{ request()->routeIs('kategori.*') ? 'active' : '' }}">
+       <a href="{{ route('admin.kategori.index') }}"
+   class="{{ request()->routeIs('admin.kategori.*') ? 'active' : '' }}">
    <i class="bi bi-tags"></i> Kategori
 </a>
 
 
     <a href="{{ route('admin.peminjaman.index') }}"
-       class="{{ request()->routeIs('admin.peminjaman.*') ? 'active' : '' }}">
+       class="{{ request()->routeIs('peminjaman.*') ? 'active' : '' }}">
    <i class="bi bi-arrow-left-right"></i> Data Peminjaman
 </a>
 
-        <a href="#"><i class="bi bi-arrow-repeat"></i> Data Pengembalian</a>
-        <a href="#"><i class="bi bi-clock-history"></i> Log Aktivitas</a>
+<a href="{{ route('admin.pengembalian.index') }}"
+   class="{{ request()->routeIs('admin.pengembalian.*') ? 'active' : '' }}">
+    <i class="bi bi-arrow-return-left"></i> Pengembalian
+</a>
+
+<a href="{{ route('admin.log.log') }}"
+   class="{{ request()->routeIs('admin.log.*') ? 'active' : '' }}">
+   <i class="bi bi-clock-history"></i> Log Aktivitas
+</a>
+
     </div>
 
     <!-- CONTENT -->

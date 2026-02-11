@@ -50,7 +50,7 @@ class KategoriController extends Controller
         'nama_kategori' => $request->nama_kategori
     ]);
 
-    return redirect()->route('kategori.index')
+    return redirect()->route('admin.kategori.index')
         ->with('success', 'Kategori berhasil diperbarui');
 }
 

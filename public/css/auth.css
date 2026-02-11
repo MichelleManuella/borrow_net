@@ -1,0 +1,99 @@
+:root {
+    --dark: #060608;
+    --primary: #2370A1;
+    --purple: #a495c6;
+    --peach: #fad3ce;
+}
+
+/* ======================
+   BACKGROUND HALAMAN
+====================== */
+body {
+    background: linear-gradient(
+        135deg,
+        var(--peach) 0%,
+        var(--purple) 100%
+    );
+    min-height: 100vh;
+    font-family: 'Inter', sans-serif;
+}
+
+/* ======================
+   CARD LOGIN
+====================== */
+.auth-card {
+    border: none;
+    border-radius: 20px;
+    background-color: #ffffff;
+}
+
+/* ======================
+   TEXT
+====================== */
+.auth-title {
+    color: var(--dark);
+    font-weight: 700;
+}
+
+.auth-description {
+    color: #6b6b6b;
+    font-size: 0.95rem;
+}
+
+/* ======================
+   FORM
+====================== */
+.form-label {
+    color: var(--dark);
+    font-weight: 500;
+}
+
+.form-control {
+    border-radius: 12px;
+    padding: 12px 14px;
+    border: 1px solid #ddd;
+}
+
+.form-control:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 0.2rem rgba(35, 112, 161, 0.2);
+}
+
+/* ======================
+   BUTTON
+====================== */
+.btn-auth-primary {
+    background-color: var(--primary);
+    color: #fff;
+    padding: 12px;
+    border-radius: 14px;
+    font-weight: 600;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-auth-primary:hover {
+    background-color: #1c5f89;
+    transform: translateY(-1px);
+}
+
+/* ======================
+   LINK
+====================== */
+.auth-link {
+    color: var(--purple);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.auth-link:hover {
+    text-decoration: underline;
+}
+
+/* ======================
+   ALERT
+====================== */
+.alert-danger {
+    border-radius: 12px;
+    font-size: 0.9rem;
+}

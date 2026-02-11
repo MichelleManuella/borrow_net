@@ -7,7 +7,7 @@
 <div class="card-stat">
     <div class="d-flex justify-content-between mb-3">
         <h5>Daftar User</h5>
-        <a href="{{ route('user.create') }}" class="btn btn-primary">
+        <a href="{{ route('admin.user.create') }}" class="btn btn-primary">
             + Tambah User
         </a>
     </div>
@@ -33,12 +33,12 @@
                     <td>{{ $user->role ?? '-' }}</td>
                     <td>
 
-                    <a href="{{ route('user.edit', $user->id) }}"
+                    <a href="{{ route('admin.user.edit', $user->id) }}"
                        class="btn btn-sm btn-warning">
                          Edit
                     </a>
 
-    <form action="{{ route('user.destroy', $user->id) }}"
+    <form action="{{ route('admin.user.destroy', $user->id) }}"
           method="POST"
           class="d-inline"
           onsubmit="return confirm('Yakin hapus user ini?')">

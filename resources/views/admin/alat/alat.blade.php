@@ -7,7 +7,7 @@
 <div class="card-stat">
     <div class="d-flex justify-content-between mb-3">
         <h5>Daftar Alat</h5>
-        <a href="{{ route('alat.create') }}" class="btn btn-primary btn-sm">
+        <a href="{{ route('admin.alat.create') }}" class="btn btn-primary btn-sm">
             + Tambah Alat
         </a>
     </div>
@@ -41,12 +41,12 @@
                         </span>
                     </td>
                     <td>
-                        <a href="{{ route('alat.edit', $alat->id) }}"
+                        <a href="{{ route('admin.alat.edit', $alat->id) }}"
                            class="btn btn-warning btn-sm">
                             Edit
                         </a>
 
-                        <form action="{{ route('alat.destroy', $alat->id) }}"
+                        <form action="{{ route('admin.alat.destroy', $alat->id) }}"
                               method="POST"
                               class="d-inline">
                             @csrf

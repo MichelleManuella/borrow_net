@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="card-stat" style="max-width:600px">
-    <form action="{{ route('alat.update', $alat->id) }}" method="POST">
+    <form action="{{ route('admin.alat.update', $alat->id) }}" method="POST">
         @csrf
         @method('PUT')
 
@@ -45,7 +45,7 @@
             <button type="submit" class="btn btn-primary">
                 Update
             </button>
-            <a href="{{ route('alat.index') }}" class="btn btn-secondary">
+            <a href="{{ route('admin.alat.index') }}" class="btn btn-secondary">
                 Batal
             </a>
         </div>

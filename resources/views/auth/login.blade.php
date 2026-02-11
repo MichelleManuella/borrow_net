@@ -4,11 +4,11 @@
 
 @section('content')
     <div class="row justify-content-center">
-        <div class="col-md-7 col-lg-5">
+        <div class="">
             <div class="card auth-card shadow-lg">
                 <div class="card-body">
-                    <h4 class="text-center mb-2 auth-title">Masuk ke Akun</h4>
-                    <p class="text-center mb-4 auth-description">Silakan masuk untuk melanjutkan ke dashboard Anda.</p>
+                    <h4 class="text-center  auth-title">Masuk ke Akun</h4>
+                    <p class="text-center  auth-description">Silakan masuk untuk melanjutkan ke dashboard Anda.</p>
 
                     @if ($errors->any())
                         <div class="alert alert-danger" role="alert">
