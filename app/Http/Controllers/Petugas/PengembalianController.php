@@ -33,7 +33,8 @@ class PengembalianController extends Controller
                 $query->where('status_bayar', 'lunas');
             })
             ->latest()
-            ->get();
+            ->paginate(10)
+            ->withQueryString();
 
         return view('petugas.pengembalian.index', compact('pengembalian'));
     }

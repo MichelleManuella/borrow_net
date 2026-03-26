@@ -1,8 +1,10 @@
 @extends('layouts.admin')
 
 @section('content')
-    <div class="container">
-        <h1 class="mb-4">Data Pengembalian</h1>
+    <h1 class="mb-3">Data Pengembalian</h1>
+    <div class="card-stat">
+        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-3 gap-2">
+        </div>
 
         @if (session('error'))
             <div class="alert alert-danger">{{ session('error') }}</div>
@@ -39,7 +41,7 @@
                             $dendaStatus = $p->denda->status_bayar ?? 'menunggu';
                         @endphp
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ ($pengembalian->firstItem() ?? 0) + $loop->index }}</td>
                             <td>{{ $p->peminjaman->user->name ?? '-' }}</td>
                             <td>{{ $p->peminjaman->alat->nama_alat ?? '-' }}</td>
                             <td>{{ \Carbon\Carbon::parse($p->peminjaman->tanggal_pinjam)->format('d-m-Y') }}</td>
@@ -80,6 +82,13 @@
                     @endforelse
                 </tbody>
             </table>
+        </div>
+
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 mt-3">
+            <small class="text-muted">Menampilkan
+                {{ $pengembalian->firstItem() ?? 0 }}-{{ $pengembalian->lastItem() ?? 0 }} dari
+                {{ $pengembalian->total() }} data</small>
+            {{ $pengembalian->links('pagination::bootstrap-5') }}
         </div>
     </div>
 @endsection

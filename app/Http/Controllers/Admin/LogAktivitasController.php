@@ -11,7 +11,7 @@ class LogAktivitasController extends Controller
     {
         $log = LogAktivitas::with('user')
             ->latest()
-            ->get();
+            ->paginate(10);
 
         return view('admin.log.logaktivitas', compact('log'));
     }

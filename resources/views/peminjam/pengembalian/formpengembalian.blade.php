@@ -4,8 +4,8 @@
 
 @section('content')
     <div class="card-stat">
-        <div class="d-flex justify-content-between mb-3">
-            <h5>Form Pengembalian</h5>
+        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-3 gap-2">
+            <h5 class="mb-0">Form Pengembalian</h5>
         </div>
 
         @if (session('error'))
@@ -37,7 +37,7 @@
                     <label class="form-label">Peminjaman</label>
                     <select name="peminjaman_id" class="form-control" required>
                         <option value="">Pilih alat</option>
-                        @foreach ($peminjaman as $p)
+                        @foreach ($peminjamanOptions as $p)
                             <option value="{{ $p->id }}"
                                 {{ (string) $p->id === (string) $selectedPeminjamanId ? 'selected' : '' }}>
                                 {{ $p->alat->nama_alat }} ({{ \Carbon\Carbon::parse($p->tanggal_pinjam)->format('d-m-Y') }})
@@ -75,7 +75,7 @@
             <tbody>
                 @forelse ($peminjaman as $p)
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ ($peminjaman->firstItem() ?? 0) + $loop->index }}</td>
                         <td>{{ $p->alat->nama_alat }}</td>
                         <td>{{ \Carbon\Carbon::parse($p->tanggal_pinjam)->format('d-m-Y') }}</td>
                         <td>{{ ucfirst($p->status) }}</td>
@@ -87,5 +87,11 @@
                 @endforelse
             </tbody>
         </table>
+
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 mt-3">
+            <small class="text-muted">Menampilkan {{ $peminjaman->firstItem() ?? 0 }}-{{ $peminjaman->lastItem() ?? 0 }}
+                dari {{ $peminjaman->total() }} data</small>
+            {{ $peminjaman->links('pagination::bootstrap-5') }}
+        </div>
     </div>
 @endsection

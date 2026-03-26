@@ -7,53 +7,189 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --dark: #060608;
-            --primary: #2370A1;
-            --purple: #a495c6;
-            --peach: #fad3ce;
+            --deep-forest: #40513B;
+            --leaf: #628141;
+            --sand: #E5D9B6;
+            --ember: #E67E22;
+            --ink: #2C2F24;
+            --stroke: rgba(64, 81, 59, 0.12);
+            --muted: #6b715c;
+        }
+
+        * {
+            box-sizing: border-box;
         }
 
         body {
-            background: #f6f7fb;
-            font-family: 'Segoe UI', sans-serif;
+            background: radial-gradient(circle at 20% 20%, rgba(98, 129, 65, 0.08), transparent 28%),
+                radial-gradient(circle at 80% 0%, rgba(230, 126, 34, 0.08), transparent 30%),
+                var(--sand);
+            color: var(--ink);
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+            min-height: 100vh;
         }
 
         .sidebar {
-            width: 260px;
+            width: 270px;
             min-height: 100vh;
-            background: linear-gradient(180deg, var(--primary), var(--purple));
-            color: white;
-            padding: 25px;
+            background: linear-gradient(180deg, var(--deep-forest), var(--leaf));
+            color: #f9f9f4;
+            padding: 28px 22px;
+            border-right: 1px solid rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+        }
+
+        .sidebar h4 {
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 20px;
+            color: #fffdf4;
         }
 
         .sidebar a {
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 12px 16px;
+            padding: 12px 14px;
             margin-bottom: 8px;
             border-radius: 12px;
-            color: white;
+            color: #f9f9f4;
             text-decoration: none;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
         }
 
         .sidebar a.active,
         .sidebar a:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(229, 217, 182, 0.14);
+            border-color: rgba(229, 217, 182, 0.35);
+            color: #fffdf4;
+        }
+
+        .sidebar .btn {
+            border-radius: 12px;
+            font-weight: 600;
+            border: 1px solid rgba(229, 217, 182, 0.35);
         }
 
         .content {
-            padding: 30px;
+            padding: 32px;
+            width: 100%;
+            background: linear-gradient(180deg, rgba(64, 81, 59, 0.025), rgba(64, 81, 59, 0.04));
+        }
+
+        h4 {
+            color: var(--deep-forest);
+            font-weight: 700;
         }
 
         .card-stat {
             border-radius: 18px;
             padding: 20px;
-            background: white;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            background: #fdfbf5;
+            border: 1px solid var(--stroke);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        .card,
+        .table,
+        .form-control,
+        .form-select,
+        .btn,
+        .alert {
+            border-radius: 14px;
+        }
+
+        .table thead {
+            background: rgba(64, 81, 59, 0.08);
+        }
+
+        .table th {
+            color: var(--deep-forest);
+            font-weight: 700;
+            border-bottom: 0;
+        }
+
+        .table td {
+            vertical-align: middle;
+        }
+
+        .table tbody tr:hover {
+            background: rgba(98, 129, 65, 0.05);
+        }
+
+        .badge.bg-success {
+            background: var(--leaf) !important;
+        }
+
+        .badge.bg-danger {
+            background: #c44121 !important;
+        }
+
+        .btn-primary {
+            background: linear-gradient(120deg, var(--leaf), var(--deep-forest));
+            border: 1px solid var(--leaf);
+            box-shadow: 0 10px 24px rgba(98, 129, 65, 0.25);
+        }
+
+        .btn-warning {
+            background: linear-gradient(120deg, var(--ember), #f1a245);
+            border: none;
+            color: #3f2a12;
+        }
+
+        .btn-outline-secondary,
+        .btn-secondary {
+            color: var(--deep-forest);
+            border: 1px solid var(--stroke);
+            background: #fffdf4;
+        }
+
+        .btn-danger {
+            background: #c44121;
+            border: none;
+        }
+
+        .alert-success {
+            background: rgba(98, 129, 65, 0.12);
+            border-color: rgba(98, 129, 65, 0.25);
+            color: var(--deep-forest);
+        }
+
+        .alert-danger {
+            background: rgba(196, 65, 33, 0.1);
+            border-color: rgba(196, 65, 33, 0.22);
+        }
+
+        .pagination .page-link {
+            color: var(--deep-forest);
+            border-radius: 10px;
+            border-color: var(--stroke);
+        }
+
+        .pagination .active .page-link {
+            background: var(--leaf);
+            border-color: var(--leaf);
+            color: #fffdf4;
+            box-shadow: 0 6px 16px rgba(98, 129, 65, 0.3);
+        }
+
+        @media (max-width: 992px) {
+            .sidebar {
+                position: fixed;
+                z-index: 10;
+            }
+
+            .content {
+                padding: 24px 18px;
+            }
         }
     </style>
 </head>

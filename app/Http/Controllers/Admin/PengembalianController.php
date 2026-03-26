@@ -38,7 +38,8 @@ class PengembalianController extends Controller
                 $query->where('status_bayar', 'lunas');
             })
             ->latest()
-            ->get();
+            ->paginate(10)
+            ->withQueryString();
 
         return view('admin.pengembalian.pengembalian', compact(
             'peminjaman',

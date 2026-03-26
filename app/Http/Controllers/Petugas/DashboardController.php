@@ -49,7 +49,10 @@ class DashboardController extends Controller
                 });
         }
 
-        $alats = $alatsQuery->latest()->get();
+        $alats = $alatsQuery
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
 
         return view('petugas.alat.daftaralat', compact('alats', 'search'));
     }

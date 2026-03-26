@@ -1,12 +1,14 @@
 @extends('layouts.admin')
 
-@section('content')
-    <div class="container">
-        <h1>Data Pengembalian</h1>
+@section('page-title', 'Data Pengembalian')
 
-        <a href="{{ route('admin.pengembalian.create') }}" class="btn btn-primary mb-3">
-            + Tambah Pengembalian
-        </a>
+@section('content')
+    <div class="card-stat">
+        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-3 gap-2">
+            <a href="{{ route('admin.pengembalian.create') }}" class="btn btn-primary">
+                + Tambah Pengembalian
+            </a>
+        </div>
 
         @if (session('success'))
             <div class="alert alert-success">
@@ -28,7 +30,7 @@
 
             @forelse($pengembalian as $p)
                 <tr>
-                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ ($pengembalian->firstItem() ?? 0) + $loop->index }}</td>
                     <td>{{ $p->peminjaman->user->name }}</td>
                     <td>{{ $p->peminjaman->alat->nama_alat }}</td>
                     <td>{{ $p->tanggal_kembali }}</td>
@@ -88,5 +90,12 @@
                 </tr>
             @endforelse
         </table>
+
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 mt-3">
+            <small class="text-muted">Menampilkan
+                {{ $pengembalian->firstItem() ?? 0 }}-{{ $pengembalian->lastItem() ?? 0 }} dari
+                {{ $pengembalian->total() }} data</small>
+            {{ $pengembalian->links('pagination::bootstrap-5') }}
+        </div>
     </div>
 @endsection

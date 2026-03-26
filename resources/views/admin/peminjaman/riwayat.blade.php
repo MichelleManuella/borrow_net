@@ -1,13 +1,15 @@
 @extends('layouts.admin')
 
+@section('page-title', 'Riwayat Peminjaman')
+
 @section('content')
-    <div class="container">
-        <div class="d-flex align-items-center justify-content-between mb-4">
-            <h1 class="mb-0">Riwayat Peminjaman</h1>
-            <form method="GET" action="{{ route('admin.peminjaman.riwayat') }}" class="d-flex gap-2" id="riwayat-filter-form">
-                <input type="text" name="q" class="form-control" placeholder="Cari nama, alat, status"
-                    value="{{ request('q') }}">
-                <select name="status" class="form-select"
+    <div class="card-stat">
+        <div class="d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-2 mb-3">
+            <form method="GET" action="{{ route('admin.peminjaman.riwayat') }}" class="d-flex flex-wrap gap-2 w-100"
+                id="riwayat-filter-form">
+                <input type="text" name="q" class="form-control" style="max-width: 260px;"
+                    placeholder="Cari nama, alat, status" value="{{ request('q') }}">
+                <select name="status" class="form-select" style="max-width: 200px;"
                     onchange="document.getElementById('riwayat-filter-form').submit()">
                     <option value="all" {{ request('status') === 'all' ? 'selected' : '' }}>Semua Status</option>
                     <option value="menunggu_konfirmasi" {{ request('status') === 'menunggu_konfirmasi' ? 'selected' : '' }}>
@@ -47,7 +49,7 @@
                 <tbody>
                     @forelse ($riwayat as $p)
                         <tr>
-                            <td>{{ $loop->iteration + ($riwayat->currentPage() - 1) * $riwayat->perPage() }}</td>
+                            <td>{{ ($riwayat->firstItem() ?? 0) + $loop->index }}</td>
                             <td>{{ $p->user->name ?? '-' }}</td>
                             <td>{{ $p->alat->nama_alat ?? '-' }}</td>
                             <td>{{ $p->jumlah }}</td>
@@ -96,8 +98,10 @@
                 </tbody>
             </table>
         </div>
-        <div class="mt-3">
-            {{ $riwayat->links() }}
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 mt-3">
+            <small class="text-muted">Menampilkan {{ $riwayat->firstItem() ?? 0 }}-{{ $riwayat->lastItem() ?? 0 }} dari
+                {{ $riwayat->total() }} data</small>
+            {{ $riwayat->links('pagination::bootstrap-5') }}
         </div>
     </div>
 @endsection

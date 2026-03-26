@@ -4,9 +4,8 @@
 
 @section('content')
     <div class="card-stat">
-        <div class="d-flex justify-content-between mb-3">
-            <h5>Daftar Alat</h5>
-            <form action="{{ route('peminjam.alat.index') }}" method="GET" class="d-flex">
+        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-3 gap-2">
+            <form action="{{ route('peminjam.alat.index') }}" method="GET" class="d-flex w-100" style="max-width: 360px;">
                 <input type="text" name="q" value="{{ $search ?? '' }}" class="form-control form-control-sm"
                     placeholder="Cari nama alat atau kategori">
             </form>
@@ -38,7 +37,7 @@
             <tbody>
                 @forelse ($alats as $alat)
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ ($alats->firstItem() ?? 0) + $loop->index }}</td>
                         <td>{{ $alat->nama_alat }}</td>
                         <td>{{ $alat->kategori->nama_kategori ?? '-' }}</td>
                         <td>
@@ -60,5 +59,11 @@
                 @endforelse
             </tbody>
         </table>
+
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 mt-3">
+            <small class="text-muted">Menampilkan {{ $alats->firstItem() ?? 0 }}-{{ $alats->lastItem() ?? 0 }} dari
+                {{ $alats->total() }} data</small>
+            {{ $alats->links('pagination::bootstrap-5') }}
+        </div>
     </div>
 @endsection

@@ -17,7 +17,8 @@ class PeminjamanController extends Controller
         $peminjaman = Peminjaman::with(['user', 'alat'])
             ->whereDoesntHave('pengembalian')
             ->latest()
-            ->get();
+            ->paginate(10)
+            ->withQueryString();
         return view('admin.peminjaman.peminjaman', compact('peminjaman'));
     }
 

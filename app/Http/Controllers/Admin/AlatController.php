@@ -22,7 +22,10 @@ class AlatController extends Controller
                 });
         }
 
-        $alats = $alatsQuery->get();
+        $alats = $alatsQuery
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
 
         return view('admin.alat.alat', compact('alats', 'search'));
     }

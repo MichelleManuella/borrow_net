@@ -4,8 +4,8 @@
 
 @section('content')
     <div class="card-stat">
-        <div class="d-flex justify-content-between mb-3">
-            <h5>Daftar Peminjaman</h5>
+        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-3 gap-2">
+            <h5 class="mb-0">Daftar Peminjaman</h5>
         </div>
 
         @if (session('error'))
@@ -36,7 +36,7 @@
             <tbody>
                 @forelse ($peminjaman as $p)
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ ($peminjaman->firstItem() ?? 0) + $loop->index }}</td>
                         <td>{{ $p->alat->nama_alat ?? '-' }}</td>
                         <td>{{ $p->jumlah }}</td>
                         <td>{{ $p->keperluan ?? '-' }}</td>
@@ -71,5 +71,11 @@
                 @endforelse
             </tbody>
         </table>
+
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 mt-3">
+            <small class="text-muted">Menampilkan {{ $peminjaman->firstItem() ?? 0 }}-{{ $peminjaman->lastItem() ?? 0 }}
+                dari {{ $peminjaman->total() }} data</small>
+            {{ $peminjaman->links('pagination::bootstrap-5') }}
+        </div>
     </div>
 @endsection

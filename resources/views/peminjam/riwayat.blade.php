@@ -4,8 +4,8 @@
 
 @section('content')
     <div class="card-stat">
-        <div class="d-flex justify-content-between mb-3">
-            <h5>Riwayat Peminjaman</h5>
+        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-3 gap-2">
+            <h5 class="mb-0">Riwayat Peminjaman</h5>
         </div>
 
         <table class="table table-bordered align-middle">
@@ -21,7 +21,7 @@
             <tbody>
                 @forelse ($riwayat as $p)
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ ($riwayat->firstItem() ?? 0) + $loop->index }}</td>
                         <td>{{ $p->alat->nama_alat ?? '-' }}</td>
                         <td>{{ \Carbon\Carbon::parse($p->tanggal_pinjam)->format('d-m-Y') }}</td>
                         <td>{{ \Carbon\Carbon::parse($p->tanggal_kembali)->format('d-m-Y') }}</td>
@@ -34,5 +34,11 @@
                 @endforelse
             </tbody>
         </table>
+
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 mt-3">
+            <small class="text-muted">Menampilkan {{ $riwayat->firstItem() ?? 0 }}-{{ $riwayat->lastItem() ?? 0 }} dari
+                {{ $riwayat->total() }} data</small>
+            {{ $riwayat->links('pagination::bootstrap-5') }}
+        </div>
     </div>
 @endsection

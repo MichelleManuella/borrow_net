@@ -52,7 +52,10 @@ class DashboardController extends Controller
                 });
         }
 
-        $alats = $alatsQuery->latest()->get();
+        $alats = $alatsQuery
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
 
         return view('peminjam.daftar_alat.daftaralat', compact('alats', 'search'));
     }
@@ -74,7 +77,8 @@ class DashboardController extends Controller
                     });
             })
             ->latest()
-            ->get();
+            ->paginate(10)
+            ->withQueryString();
 
         return view('peminjam.peminjaman.formpeminjaman', compact('peminjaman'));
     }
@@ -170,14 +174,23 @@ class DashboardController extends Controller
         }
 
         $selectedPeminjamanId = request('peminjaman_id');
-        $peminjaman = Peminjaman::with('alat')
+        $peminjamanBaseQuery = Peminjaman::with('alat')
             ->where('user_id', $user->id)
             ->where('status', 'disetujui')
-            ->whereDoesntHave('pengembalian')
-            ->latest()
-            ->get();
+            ->whereDoesntHave('pengembalian');
 
-        return view('peminjam.pengembalian.formpengembalian', compact('peminjaman', 'selectedPeminjamanId'));
+        $peminjamanOptions = (clone $peminjamanBaseQuery)->get();
+
+        $peminjaman = $peminjamanBaseQuery
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('peminjam.pengembalian.formpengembalian', compact(
+            'peminjaman',
+            'peminjamanOptions',
+            'selectedPeminjamanId'
+        ));
     }
 
     public function pengembalianStore(Request $request)
@@ -234,7 +247,8 @@ class DashboardController extends Controller
                     ->orWhereHas('pengembalian');
             })
             ->latest()
-            ->get();
+            ->paginate(10)
+            ->withQueryString();
 
         return view('peminjam.riwayat_peminjaman.riwayatpeminjaman', compact('riwayat'));
     }
