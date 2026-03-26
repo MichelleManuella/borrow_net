@@ -26,8 +26,11 @@ class User extends Authenticatable
         'password',
         'akun_role',
         'role',
+        'kelas',
+        'bidang_ajar',
+        'nomor_telepon',
     ];
-    
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -52,8 +55,7 @@ class User extends Authenticatable
     }
 
     public function peminjaman()
-{
-    return $this->hasMany(Peminjaman::class);
-}
-
+    {
+        return $this->hasMany(Peminjaman::class);
+    }
 }

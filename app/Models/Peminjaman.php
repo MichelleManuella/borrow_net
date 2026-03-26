@@ -18,6 +18,8 @@ class Peminjaman extends Model
         'alat_id',
         'tanggal_pinjam',
         'tanggal_kembali',
+        'jumlah',
+        'keperluan',
         'status',
     ];
 
@@ -31,8 +33,7 @@ class Peminjaman extends Model
         return $this->belongsTo(Alat::class);
     }
     public function pengembalian()
-{
-    return $this->hasOne(Pengembalian::class);
-}
-
+    {
+        return $this->hasOne(Pengembalian::class);
+    }
 }

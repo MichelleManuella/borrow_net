@@ -8,21 +8,31 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PeminjamanController;
 use App\Http\Controllers\Admin\PengembalianController;
 use App\Http\Controllers\Admin\LogAktivitasController;
+use App\Http\Controllers\Petugas\DashboardController as PetugasDashboardController;
+use App\Http\Controllers\Petugas\PengembalianController as PetugasPengembalianController;
+use App\Http\Controllers\Peminjam\DashboardController as PeminjamDashboardController;
+use App\Models\Alat;
+use App\Models\Pengembalian;
+use App\Models\Peminjaman;
+use App\Models\User;
+use Carbon\Carbon;
 
 /*
 |--------------------------------------------------------------------------
 | AUTH
 |--------------------------------------------------------------------------
 */
+
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::controller(AuthController::class)->group(function () {
-    Route::get('/login', 'login')->name('auth.login');
-    Route::post('/login', 'loginProcess')->name('auth.login.process');
-    Route::get('/register', 'register')->name('auth.register');
-    Route::post('/register', 'registerProcess')->name('auth.register.process');
+    Route::get('/login', 'login')->name('login');
+    Route::post('/login', 'loginProcess')->name('login.process');
+    Route::get('/register', 'register')->name('register');
+    Route::post('/register', 'registerProcess')->name('register.process');
+    Route::post('/logout', 'logout')->name('logout');
 });
 
 /*
@@ -34,7 +44,17 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')->group(function () 
 
     // ================= DASHBOARD =================
     Route::get('/dashboard', function () {
-        return view('admin.dashboard');
+        $totalUser = User::count();
+        $totalAlat = Alat::count();
+        $peminjamanAktif = Peminjaman::whereNull('tanggal_kembali')->count();
+        $pengembalianHariIni = Pengembalian::whereDate('tanggal_kembali', Carbon::today())->count();
+
+        return view('admin.dashboard', compact(
+            'totalUser',
+            'totalAlat',
+            'peminjamanAktif',
+            'pengembalianHariIni'
+        ));
     })->name('dashboard');
 
     // ================= KATEGORI =================
@@ -63,11 +83,12 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')->group(function () 
     Route::put('/peminjaman/{id}', [PeminjamanController::class, 'update'])->name('peminjaman.update');
     Route::put('/peminjaman/{id}/status', [PeminjamanController::class, 'updateStatus'])->name('peminjaman.status');
     Route::delete('/peminjaman/{id}', [PeminjamanController::class, 'destroy'])->name('peminjaman.destroy');
+    Route::get('/peminjaman/riwayat', [PeminjamanController::class, 'riwayat'])->name('peminjaman.riwayat');
 
     // ================= PENGEMBALIAN ================
 
-        // halaman pengembalian
-        Route::get('/pengembalian', [PengembalianController::class, 'index'])
+    // halaman pengembalian
+    Route::get('/pengembalian', [PengembalianController::class, 'index'])
         ->name('pengembalian.index');
 
     Route::get('/pengembalian/create', [PengembalianController::class, 'create'])
@@ -82,12 +103,48 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')->group(function () 
     Route::put('/pengembalian/{id}', [PengembalianController::class, 'update'])
         ->name('pengembalian.update');
 
+    Route::post('/pengembalian/{pengembalian}/konfirmasi', [PengembalianController::class, 'confirmDenda'])
+        ->name('pengembalian.konfirmasi');
+
     Route::delete('/pengembalian/{id}', [PengembalianController::class, 'destroy'])
         ->name('pengembalian.destroy');
-
 });
 
-    Route::prefix('admin')->group(function () {
-        Route::get('log-aktivitas', [LogAktivitasController::class, 'index'])
-            ->name('admin.log.log');
-    });    
+/*
+|--------------------------------------------------------------------------
+| PETUGAS
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth'])->name('petugas.')->prefix('petugas')->group(function () {
+    Route::get('/dashboard', [PetugasDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/alat', [PetugasDashboardController::class, 'alatIndex'])->name('alat.index');
+    Route::get('/pengembalian', [PetugasPengembalianController::class, 'index'])->name('pengembalian.index');
+    Route::get('/pengembalian/{pengembalian}/edit', [PetugasPengembalianController::class, 'edit'])
+        ->name('pengembalian.edit');
+    Route::put('/pengembalian/{pengembalian}', [PetugasPengembalianController::class, 'update'])
+        ->name('pengembalian.update');
+    Route::post('/pengembalian/{pengembalian}/konfirmasi', [PetugasPengembalianController::class, 'confirmDenda'])
+        ->name('pengembalian.konfirmasi');
+});
+
+/*
+|--------------------------------------------------------------------------
+| PEMINJAM
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth'])->name('peminjam.')->prefix('peminjam')->group(function () {
+    Route::get('/dashboard', [PeminjamDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/alat', [PeminjamDashboardController::class, 'alatIndex'])->name('alat.index');
+    Route::get('/peminjaman', [PeminjamDashboardController::class, 'peminjamanIndex'])->name('peminjaman.index');
+    Route::get('/peminjaman/create/{alat}', [PeminjamDashboardController::class, 'peminjamanCreate'])->name('peminjaman.create');
+    Route::post('/peminjaman', [PeminjamDashboardController::class, 'peminjamanStore'])->name('peminjaman.store');
+    Route::post('/peminjaman/{peminjaman}/batal', [PeminjamDashboardController::class, 'peminjamanCancel'])->name('peminjaman.batal');
+    Route::get('/pengembalian', [PeminjamDashboardController::class, 'pengembalianIndex'])->name('pengembalian.index');
+    Route::post('/pengembalian', [PeminjamDashboardController::class, 'pengembalianStore'])->name('pengembalian.store');
+    Route::get('/riwayat', [PeminjamDashboardController::class, 'riwayatIndex'])->name('riwayat.index');
+});
+
+Route::prefix('admin')->group(function () {
+    Route::get('log-aktivitas', [LogAktivitasController::class, 'index'])
+        ->name('admin.log.log');
+});

@@ -22,5 +22,9 @@ class Pengembalian extends Model
     {
         return $this->belongsTo(Peminjaman::class);
     }
-}
 
+    public function denda()
+    {
+        return $this->hasOne(Denda::class);
+    }
+}

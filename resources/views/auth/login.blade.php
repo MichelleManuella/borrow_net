@@ -16,16 +16,13 @@
                         </div>
                     @endif
 
-                    <form method="POST" action="{{ route('auth.login.process') }}">
+                    <form method="POST" action="{{ route('login.process') }}">
                         @csrf
 
                         <div class="mb-3">
                             <label class="form-label">Email atau Username</label>
-                            <input type="text"
-                                   name="login"
-                                   value="{{ old('login') }}"
-                                   class="form-control @error('login') is-invalid @enderror"
-                                   required>
+                            <input type="text" name="login" value="{{ old('login') }}"
+                                class="form-control @error('login') is-invalid @enderror" required>
                             @error('login')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -33,10 +30,8 @@
 
                         <div class="mb-3">
                             <label class="form-label">Password</label>
-                            <input type="password"
-                                   name="password"
-                                   class="form-control @error('password') is-invalid @enderror"
-                                   required>
+                            <input type="password" name="password"
+                                class="form-control @error('password') is-invalid @enderror" required>
                             @error('password')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -48,7 +43,7 @@
 
                         <div class="text-center mt-3">
                             <small>Belum punya akun?
-                                <a class="auth-link" href="{{ route('auth.register') }}">Daftar</a>
+                                <a class="auth-link" href="{{ route('register') }}">Daftar</a>
                             </small>
                         </div>
                     </form>
