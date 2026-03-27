@@ -22,58 +22,58 @@
                     <form method="POST" action="{{ route('register.process') }}">
                         @csrf
 
-                        <div class="mb-3">
-                            <label class="form-label">Nama</label>
-                            <input type="text" name="name" value="{{ old('name') }}" class="form-control" required>
-                        </div>
+                        <div class="row g-3">
+                            <div class="col-12 col-md-6">
+                                <label class="form-label">Nama</label>
+                                <input type="text" name="name" value="{{ old('name') }}" class="form-control"
+                                    required>
+                            </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Email</label>
-                            <input type="email" name="email" value="{{ old('email') }}" class="form-control" required>
-                        </div>
+                            <div class="col-12 col-md-6">
+                                <label class="form-label">Email</label>
+                                <input type="email" name="email" value="{{ old('email') }}" class="form-control"
+                                    required>
+                            </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Status</label>
-                            <select name="role" id="role" class="form-select" required>
-                                <option value="" disabled selected>Pilih Status</option>
-                                <option value="siswa" {{ old('role') === 'siswa' ? 'selected' : '' }}>Siswa</option>
-                                <option value="guru" {{ old('role') === 'guru' ? 'selected' : '' }}>Guru</option>
-                            </select>
-                        </div>
+                            <div class="col-12 col-md-6">
+                                <label class="form-label">Status</label>
+                                <select name="role" id="role" class="form-select" required>
+                                    <option value="" disabled selected>Pilih Status</option>
+                                    <option value="siswa" {{ old('role') === 'siswa' ? 'selected' : '' }}>Siswa</option>
+                                    <option value="guru" {{ old('role') === 'guru' ? 'selected' : '' }}>Guru</option>
+                                </select>
+                            </div>
 
-                        <div id="siswa-fields" class="d-none">
-                            <div class="mb-3">
+                            <div class="col-12 col-md-6" id="telp-field">
+                                <label class="form-label">Nomor Telepon</label>
+                                <input type="text" name="nomor_telepon" value="{{ old('nomor_telepon') }}"
+                                    class="form-control" required>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <label class="form-label">Password</label>
+                                <input type="password" name="password" class="form-control" required>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <label class="form-label">Konfirmasi Password</label>
+                                <input type="password" name="password_confirmation" class="form-control" required>
+                            </div>
+
+                            <div id="siswa-fields" class="col-12 d-none">
                                 <label class="form-label">Kelas</label>
                                 <input type="text" name="kelas" value="{{ old('kelas') }}" class="form-control"
                                     id="kelas-input">
                             </div>
-                        </div>
 
-                        <div id="guru-fields" class="d-none">
-                            <div class="mb-3">
+                            <div id="guru-fields" class="col-12 d-none">
                                 <label class="form-label">Bidang yang Diajar</label>
                                 <input type="text" name="bidang_ajar" value="{{ old('bidang_ajar') }}"
                                     class="form-control" id="bidang-ajar-input">
                             </div>
                         </div>
 
-                        <div class="mb-3" id="telp-field">
-                            <label class="form-label">Nomor Telepon</label>
-                            <input type="text" name="nomor_telepon" value="{{ old('nomor_telepon') }}"
-                                class="form-control" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Password</label>
-                            <input type="password" name="password" class="form-control" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Konfirmasi Password</label>
-                            <input type="password" name="password_confirmation" class="form-control" required>
-                        </div>
-
-                        <button type="submit" class="btn btn-auth-primary w-100">
+                        <button type="submit" class="btn btn-auth-primary w-100 mt-4">
                             Daftar
                         </button>
 

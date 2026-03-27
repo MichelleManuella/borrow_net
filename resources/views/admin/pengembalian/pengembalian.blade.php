@@ -61,21 +61,19 @@
 
                         @if ($needsDenda && $dendaStatus !== 'lunas')
                             <form action="{{ route('admin.pengembalian.konfirmasi', $p->id) }}" method="POST"
-                                style="display:inline;">
+                                style="display:inline;" data-confirm="Konfirmasi denda sudah dibayar?">
                                 @csrf
-                                <button type="submit" class="btn btn-success btn-sm"
-                                    onclick="return confirm('Konfirmasi denda sudah dibayar?')">
+                                <button type="submit" class="btn btn-success btn-sm">
                                     Konfirmasi Bayar
                                 </button>
                             </form>
                         @endif
 
                         <form action="{{ route('admin.pengembalian.destroy', $p->id) }}" method="POST"
-                            style="display:inline;">
+                            style="display:inline;" data-confirm="Yakin mau hapus data ini?">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm"
-                                onclick="return confirm('Yakin mau hapus data ini?')">
+                            <button type="submit" class="btn btn-danger btn-sm">
                                 Hapus
                             </button>
                         </form>

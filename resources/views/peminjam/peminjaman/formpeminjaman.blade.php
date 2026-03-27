@@ -46,7 +46,7 @@
                         <td>
                             @if (strtolower($p->status) === 'menunggu')
                                 <form method="POST" action="{{ route('peminjam.peminjaman.batal', $p->id) }}"
-                                    onsubmit="return confirm('Batalkan peminjaman ini?')">
+                                    data-confirm="Batalkan peminjaman ini?">
                                     @csrf
                                     <button type="submit" class="btn btn-sm btn-danger">
                                         Batal Pinjam

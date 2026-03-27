@@ -72,11 +72,10 @@
                                 </a>
 
                                 <form action="{{ route('admin.peminjaman.destroy', $p->id) }}" method="POST"
-                                    class="d-inline">
+                                    class="d-inline" data-confirm="Yakin ingin menghapus data ini?">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="btn btn-sm btn-warning mb-1"
-                                        onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
+                                    <button class="btn btn-sm btn-warning mb-1">Hapus</button>
                                 </form>
                             </td>
                         </tr>

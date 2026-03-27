@@ -51,10 +51,11 @@
                                 Edit
                             </a>
 
-                            <form action="{{ route('admin.alat.destroy', $alat->id) }}" method="POST" class="d-inline">
+                            <form action="{{ route('admin.alat.destroy', $alat->id) }}" method="POST"
+                                class="d-inline" data-confirm="Yakin hapus alat ini?">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus alat ini?')">
+                                <button class="btn btn-danger btn-sm">
                                     Hapus
                                 </button>
                             </form>

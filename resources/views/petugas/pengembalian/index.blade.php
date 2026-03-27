@@ -65,10 +65,9 @@
 
                                 @if ($needsDenda && $dendaStatus !== 'lunas')
                                     <form method="POST" action="{{ route('petugas.pengembalian.konfirmasi', $p->id) }}"
-                                        style="display:inline;">
+                                        style="display:inline;" data-confirm="Konfirmasi denda sudah dibayar?">
                                         @csrf
-                                        <button type="submit" class="btn btn-sm btn-success"
-                                            onclick="return confirm('Konfirmasi denda sudah dibayar?')">
+                                        <button type="submit" class="btn btn-sm btn-success">
                                             Konfirmasi Bayar
                                         </button>
                                     </form>

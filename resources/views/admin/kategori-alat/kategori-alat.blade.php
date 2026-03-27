@@ -68,7 +68,7 @@
                                         </a>
 
                                         <form action="{{ route('admin.kategori.destroy', $kategori->id) }}" method="POST"
-                                            class="d-inline" onsubmit="return confirm('Yakin hapus kategori ini?')">
+                                            class="d-inline" data-confirm="Yakin hapus kategori ini?">
                                             @csrf
                                             @method('DELETE')
 

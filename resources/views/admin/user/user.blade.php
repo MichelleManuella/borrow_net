@@ -37,7 +37,7 @@
                             </a>
 
                             <form action="{{ route('admin.user.destroy', $user->id) }}" method="POST" class="d-inline"
-                                onsubmit="return confirm('Yakin hapus user ini?')">
+                                data-confirm="Yakin hapus user ini?">
                                 @csrf
                                 @method('DELETE')
 

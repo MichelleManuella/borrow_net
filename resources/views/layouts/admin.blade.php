@@ -312,6 +312,100 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const palette = {
+                bg: '#fdfbf5',
+                text: 'var(--ink)',
+                confirm: 'var(--leaf)',
+                cancel: '#b0b5a3',
+                danger: '#c44121'
+            };
+
+            const flash = {
+                success: @json(session('success')),
+                error: @json(session('error')),
+                warning: @json(session('warning')),
+                info: @json(session('info')),
+                status: @json(session('status')),
+            };
+
+            const showFlash = (type, message) => {
+                const titles = {
+                    success: 'Berhasil',
+                    error: 'Terjadi Kesalahan',
+                    warning: 'Perhatian',
+                    info: 'Informasi'
+                };
+
+                Swal.fire({
+                    title: titles[type] || 'Info',
+                    text: message,
+                    icon: type === 'error' ? 'error' : type,
+                    background: palette.bg,
+                    color: palette.text,
+                    confirmButtonColor: palette.confirm,
+                    cancelButtonColor: palette.cancel,
+                    showConfirmButton: true,
+                    timer: type === 'success' ? 1800 : undefined,
+                    timerProgressBar: type === 'success',
+                    customClass: {
+                        popup: 'rounded-4 shadow-lg',
+                        title: 'fw-bold',
+                        confirmButton: 'btn btn-success'
+                    },
+                    buttonsStyling: false,
+                });
+            };
+
+            const flashOrder = ['success', 'error', 'warning', 'info'];
+            let shown = false;
+
+            flashOrder.forEach((type) => {
+                if (!shown && flash[type]) {
+                    showFlash(type, flash[type]);
+                    shown = true;
+                }
+            });
+
+            if (!shown && flash.status) {
+                showFlash('success', flash.status);
+            }
+
+            document.querySelectorAll('form[data-confirm]').forEach((form) => {
+                form.addEventListener('submit', (e) => {
+                    const message = form.getAttribute('data-confirm') || 'Yakin melanjutkan tindakan ini?';
+                    e.preventDefault();
+
+                    Swal.fire({
+                        title: 'Konfirmasi',
+                        text: message,
+                        icon: 'warning',
+                        background: palette.bg,
+                        color: palette.text,
+                        showCancelButton: true,
+                        confirmButtonText: 'Ya, lanjut',
+                        cancelButtonText: 'Batal',
+                        confirmButtonColor: palette.confirm,
+                        cancelButtonColor: palette.cancel,
+                        customClass: {
+                            popup: 'rounded-4 shadow-lg',
+                            confirmButton: 'btn btn-success me-2',
+                            cancelButton: 'btn btn-outline-secondary'
+                        },
+                        buttonsStyling: false,
+                        reverseButtons: true,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.submit();
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+
 </body>
 
 </html>
