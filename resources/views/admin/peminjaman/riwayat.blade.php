@@ -5,7 +5,7 @@
 @section('content')
     <div class="card-stat">
         <div class="d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-2 mb-3">
-            <form method="GET" action="{{ route('admin.peminjaman.riwayat') }}" class="d-flex flex-wrap gap-2 w-100"
+            <form method="GET" action="{{ route('admin.peminjaman.riwayat') }}" class="d-flex flex-wrap gap-2 flex-grow-1"
                 id="riwayat-filter-form">
                 <input type="text" name="q" class="form-control" style="max-width: 260px;"
                     placeholder="Cari nama, alat, status" value="{{ request('q') }}">
@@ -29,6 +29,8 @@
                 <button type="submit" class="btn btn-primary">Cari</button>
                 <a href="{{ route('admin.peminjaman.riwayat') }}" class="btn btn-outline-secondary">Reset</a>
             </form>
+            <a href="{{ route('admin.peminjaman.riwayat.export', request()->only(['q', 'status'])) }}"
+                class="btn btn-primary ms-lg-auto">Cetak Excel</a>
         </div>
 
         <div class="table-responsive">

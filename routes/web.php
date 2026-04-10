@@ -84,6 +84,7 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')->group(function () 
     Route::put('/peminjaman/{id}/status', [PeminjamanController::class, 'updateStatus'])->name('peminjaman.status');
     Route::delete('/peminjaman/{id}', [PeminjamanController::class, 'destroy'])->name('peminjaman.destroy');
     Route::get('/peminjaman/riwayat', [PeminjamanController::class, 'riwayat'])->name('peminjaman.riwayat');
+    Route::get('/peminjaman/riwayat/export', [PeminjamanController::class, 'exportRiwayat'])->name('peminjaman.riwayat.export');
 
     // ================= PENGEMBALIAN ================
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\LogAktivitas;
 use App\Models\Peminjaman;
 use App\Models\Pengembalian;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -193,11 +194,89 @@ class PeminjamanController extends Controller
     // 8. Riwayat peminjaman (sudah dikembalikan)
     public function riwayat()
     {
+        $this->authorizeRiwayatAccess();
+
         $search = request('q');
         $statusFilter = request('status');
 
         $riwayatQuery = Peminjaman::with(['user', 'alat', 'pengembalian.denda'])
             ->whereHas('pengembalian');
+
+        $this->applyRiwayatFilters($riwayatQuery, $search, $statusFilter);
+
+        $riwayat = $riwayatQuery
+            ->leftJoin('pengembalian', 'pengembalian.peminjaman_id', '=', 'peminjaman.id')
+            ->orderByDesc('pengembalian.tanggal_kembali')
+            ->orderByDesc('peminjaman.tanggal_kembali')
+            ->select('peminjaman.*')
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('admin.peminjaman.riwayat', compact('riwayat'));
+    }
+
+    public function exportRiwayat(Request $request)
+    {
+        $this->authorizeRiwayatAccess();
+
+        $search = $request->query('q');
+        $statusFilter = $request->query('status');
+
+        $riwayatQuery = Peminjaman::with(['user', 'alat', 'pengembalian.denda'])
+            ->whereHas('pengembalian');
+
+        $this->applyRiwayatFilters($riwayatQuery, $search, $statusFilter);
+
+        $riwayat = $riwayatQuery
+            ->leftJoin('pengembalian', 'pengembalian.peminjaman_id', '=', 'peminjaman.id')
+            ->orderByDesc('pengembalian.tanggal_kembali')
+            ->orderByDesc('peminjaman.tanggal_kembali')
+            ->select('peminjaman.*')
+            ->get();
+
+        $alatIds = $riwayat->pluck('alat_id')->filter()->unique();
+        $alatStats = Peminjaman::with('user')
+            ->whereIn('alat_id', $alatIds)
+            ->get()
+            ->groupBy('alat_id')
+            ->map(function ($records) {
+                $peminjamSummary = $records
+                    ->groupBy('user_id')
+                    ->map(function ($perUserRecords) {
+                        $nama = optional($perUserRecords->first()->user)->name ?? 'Tidak diketahui';
+                        return $nama . ' (' . $perUserRecords->count() . 'x)';
+                    })
+                    ->values()
+                    ->implode(', ');
+
+                return [
+                    'total' => $records->count(),
+                    'peminjam' => $peminjamSummary,
+                ];
+            });
+
+        $generatedAt = now();
+        $fileName = 'riwayat-peminjaman-' . $generatedAt->format('Ymd-His') . '.xls';
+
+        $html = view('admin.peminjaman.exports.riwayat_excel', [
+            'riwayat' => $riwayat,
+            'alatStats' => $alatStats,
+            'search' => $search,
+            'statusFilter' => $statusFilter,
+            'generatedAt' => $generatedAt,
+        ])->render();
+
+        return response($html, 200, [
+            'Content-Type' => 'application/vnd.ms-excel; charset=UTF-8',
+            'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
+            'Cache-Control' => 'max-age=0, no-cache, must-revalidate, proxy-revalidate',
+            'Pragma' => 'public',
+            'Expires' => '0',
+        ]);
+    }
+
+    private function applyRiwayatFilters(Builder $riwayatQuery, ?string $search, ?string $statusFilter): void
+    {
 
         if ($search) {
             $riwayatQuery->where(function ($query) use ($search) {
@@ -237,15 +316,13 @@ class PeminjamanController extends Controller
                 });
             }
         }
+    }
 
-        $riwayat = $riwayatQuery
-            ->leftJoin('pengembalian', 'pengembalian.peminjaman_id', '=', 'peminjaman.id')
-            ->orderByDesc('pengembalian.tanggal_kembali')
-            ->orderByDesc('peminjaman.tanggal_kembali')
-            ->select('peminjaman.*')
-            ->paginate(10)
-            ->withQueryString();
-
-        return view('admin.peminjaman.riwayat', compact('riwayat'));
+    private function authorizeRiwayatAccess(): void
+    {
+        $role = strtolower((string) optional(Auth::user())->akun_role);
+        if (!in_array($role, ['admin', 'petugas'], true)) {
+            abort(403, 'Unauthorized');
+        }
     }
 }
